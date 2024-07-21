@@ -1,0 +1,14 @@
+doctype html 
+html 
+    head 
+        title #{title}
+    body
+        h1 Delete Tasks to ToDo List
+        if error
+            p(style="color: red;")= error
+        form(action="/delete", method="delete")
+            label(for="task") Task:
+            input(type="text", name="task", required=true)
+            button(type="delete") Delete Task
+            
+        a(href="/") Back to To-Do List
