@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const tasks = require("../data/users");
+const usertodo= require("../usertodo/udata"); 
 
 router
 .route("/")
 .get((req, res) => {
-  res.render('indexview',{title:'ToDo List Page',tasks},
+  res.render('indexview',{title:'ToDo List Page',usertodo},
   );
   
 });
@@ -16,43 +17,48 @@ router
   res.render('form', { title: 'Add Task' });
 });
 router
-.route("/formd")
-.get((req, res) => {
-  res.render('formd', { title: 'Delete Task' });
-});
-router
 .route("/submit")
 .post((req, res) => {
   
       if (req.body.task) {
-        if (tasks.find((u) => u.name == req.body.task)) {
-          res.json({ error: "Name Already Added" });
+        if (usertodo.find((u) => u.list == req.body.task)) {
+          res.json({ error: "List Already Added" });
           return;
         }
         const ta = {
-          id: tasks[tasks.length - 1].id + 1,
-          name: req.body.task,
+          uid: usertodo[usertodo.length - 1].uid + 1,
           list: req.body.task
-         
         };
   
-        tasks.push(ta);
-        //tasks.push(task);
+        usertodo.push(ta);
         res.redirect('/');
-        //res.json(users[users.length - 1]);
       } else res.status(400).render('form', { title: 'Add Task', error: 'Task is required' });
 });
-
+//Get all users using the todo list
 router
-  .route("/:id")
+  .route("/users")
+  .get((req,res,next)=>{
+    res.json(tasks);
+  })
+//Search the user by id through route
+router
+  .route("/users/:id")
   .get((req, res, next) => {
     const user = tasks.find((u) => u.id == req.params.id);
     if (user) res.json(user);
     else next();
-  })
-
+  });
+//Search the user by name through route using query params
+router
+  .route("/users/Name")
+  .get((req, res, next) => {
+    console.log(req.query.name);
+    const user = tasks.find((u) => u.name == req.query.name);
+    if (user) res.json(user);
+    else next();
+  });
  router
-  .route("/de/:id")
+  .route("/users/de/:id")
   .delete((req, res, next) => {
     const user = tasks.find((u, i) => {
       if (u.id == req.params.id) {
@@ -65,7 +71,7 @@ router
     else next();
   });
  router
- .route("/pa/:id")
+ .route("/users/pa/:id")
   .patch((req, res, next) => {
     const user = tasks.find((u, i) => {
       if (u.id == req.params.id) {
