@@ -40,6 +40,28 @@ router
   .get((req,res,next)=>{
     res.json(tasks);
   })
+//Display Users and Delete and Update users
+router
+.route("/displayusers")
+.get((req, res) => {
+  res.render('displayusers',{title:'Users Page',tasks},
+  );
+  
+});
+//Delete Users through user interaction
+router
+.route("/dusers/:name")
+.post((req, res) => {
+  console.log(req.params.name);
+  const user = tasks.find((u, i) => {
+    //Cannot delete last user
+    if (u.name == req.params.name && tasks.length>1) {
+      tasks.splice(i, 1);
+      return true;
+    }
+  });
+  res.redirect("/displayusers");
+});
 //Search the user by id through route
 router
   .route("/users/:id")
@@ -57,6 +79,33 @@ router
     if (user) res.json(user);
     else next();
   });
+  //Update users display 
+  router
+  .route("/updateusers")
+  .get((req, res) => {
+    res.render('updateusers',{title:'Users Update Page',tasks},
+    );
+    
+  });
+  //Update Users through user interaction
+  router
+  .route("/updateusers/:name")
+  .post((req, res) => {
+    const usernameold=req.params.name;
+    console.log(usernameold);
+    const unameFromForm=req.body.upname;
+    console.log(unameFromForm);
+    // Find the user with the name 'Anu'
+    let userToUpdate = tasks.find(user => user.name === usernameold);
+    // Update the name if the user is found
+    if (userToUpdate) {
+      userToUpdate.name = unameFromForm;
+    }
+    if (userToUpdate) console.log("User Updated");
+    else next();
+    res.redirect("/updateusers");
+  });
+  //Handle the delete directly from route.Test by POSTMAN
  router
   .route("/users/de/:id")
   .delete((req, res, next) => {
@@ -70,6 +119,7 @@ router
     if (user) res.json(user);
     else next();
   });
+  //Handle the update directly from route.Test by POSTMAN
  router
  .route("/users/pa/:id")
   .patch((req, res, next) => {

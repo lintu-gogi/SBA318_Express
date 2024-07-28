@@ -14,11 +14,13 @@
     Created a To Do List for multiple users.
     ## Features
     This application first display all the Todo List.
-    New Todos can be added to the list through the client manipulation.
+    New Todos can be added to the list by clicking the link 'Add a new Todo'
+    Display all the users by clicking the link 'Display Users'
     Client interaction is possible through the use of views and templates.
     If the item is already existing in the list it cannot be added again.
     An empty list also cannot be added.
-    Routes are created for manipulating user data in ./data/users.js file.
+    Routes are created for manipulating user's list in ./data/users.js file and user todo list in ./usertodo/udata.js
+    Base URL: http://localhost:3001/
     GET all the users can done by http://localhost:3001/users 
     GET the user by id can done by http://localhost:3001/users/:id
     GET the user by Name can done by http://localhost:3001/users/Name/?name=Anu. This search is done by using query params.

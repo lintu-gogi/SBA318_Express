@@ -1,0 +1,17 @@
+doctype html 
+html 
+    head 
+        title #{title}
+    body
+        h1 Update Users
+        if error
+            p(style="color: red;")= error
+        ul
+            each todo, index in tasks
+                form(method="POST",action=`/updateusers/${todo.name}`)
+                    li  #{todo.name}
+                    label(for="upname") Enter New User:
+                    input(type="text", name="upname", required=true)
+                    button(type="submit") Update
+                    br
+        a(href="/displayusers") Back to Users List

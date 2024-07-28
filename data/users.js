@@ -14,8 +14,18 @@ const users=[
   },
   {
     id: 3,
-    name: "john",
+    name: "John",
     email: "john123@example.com"
+  },
+  {
+    id: 4,
+    name: "Kathy",
+    email: "Kathy123@example.com"
+  },
+  {
+    id: 5,
+    name: "Sarah",
+    email: "Sarah123@example.com"
   }
   
 ];

@@ -1,0 +1,19 @@
+doctype html 
+html 
+    head 
+        title #{title}
+    body
+        h1 List Of Users
+        if error
+            p(style="color: red;")= error
+        each todo, index in tasks
+            form(method="POST",action=`/dusers/${todo.name}`)
+                label Name:  #{todo.name}
+                br
+                label Email:  #{todo.email}
+                br
+                button(type="submit") Delete
+        br
+        a(href="/updateusers") Update Users
+        br
+        a(href="/form") Add a new Todo to the Users
